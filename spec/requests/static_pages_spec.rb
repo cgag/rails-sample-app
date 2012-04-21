@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe 'Static Pages' do
 
+  let(:base_title) { 'rails tutorial' }
+
   describe 'Home page' do
 
     it "should have the content 'Sample App'" do
@@ -14,7 +16,7 @@ describe 'Static Pages' do
     it "should have the right title" do
       visit '/static_pages/home'
       page.should have_selector('title',
-                                :text => 'rails tutorial | home')
+                                :text => "#{base_title} | home")
     end
   end
 
@@ -29,7 +31,7 @@ describe 'Static Pages' do
     it "should have the right title" do
       visit '/static_pages/help' 
       page.should have_selector('title',
-                                  :text => 'rails tutorial | help')
+                                  :text => "#{base_title} | help")
       end
   end
 
@@ -44,7 +46,7 @@ describe 'Static Pages' do
     it "should have the right title" do
       visit '/static_pages/about'
       page.should have_selector('title',
-                                :text => 'rails tutorial | about us')
+                                :text => "#{base_title} | about us")
     end
   end
 end
