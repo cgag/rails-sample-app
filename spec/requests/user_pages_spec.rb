@@ -26,6 +26,21 @@ describe "User Pages" do
           page.should have_selector('li', text: user.name)
         end
       end
+
+      let(:first_page)  { User.paginate(page: 1) }
+      let(:second_page) { User.paginate(page: 2) }
+
+      it "should list the first page of users" do
+        first_page.each do |user|
+          page.should have_selector('li', text: user.name)
+        end
+      end
+
+      it "should not list the second page of users" do
+        second_page.each do |user|
+          page.should_not have_selector('li', text: user.name)
+        end
+      end
     end
 
     describe "delete links" do
@@ -76,8 +91,8 @@ describe "User Pages" do
         fill_in "Name",         with: "Example User"
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
-      end
+        fill_in "Confirm Password", with: "foobar"
+      end 
 
       it "should create a user" do
         # is to just an alias for should?
@@ -113,7 +128,7 @@ describe "User Pages" do
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
     before do
-      sign_in user 
+      sign_in user
       visit edit_user_path(user)
     end
 
@@ -149,6 +164,5 @@ describe "User Pages" do
       specify { user.reload.name.should  == new_name }
       specify { user.reload.email.should == new_email }
     end
-
   end
 end
